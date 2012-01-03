@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight" >
+
+    <ImageView
+        android:id="@+id/weatherPic"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:padding="2dip"
+       />
+
+   <TextView
+       android:id="@+id/weatherDate"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/weatherTempScope"
+       android:layout_alignTop="@+id/weatherTempScope"
+       android:layout_alignParentTop="true"
+       android:layout_toRightOf="@+id/weatherPic"
+       android:layout_marginLeft="5dip"
+      />
+
+   <TextView
+        android:id="@+id/weatherTempScope"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/weatherCondition"
+        android:layout_toRightOf="@+id/weatherPic"
+        android:layout_marginLeft="5dip"
+        android:singleLine="true"
+         />
+   
+   <TextView
+        android:id="@+id/weatherCondition"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/weatherPic"
+        android:singleLine="true"
+        android:layout_marginLeft="5dip"
+        />
+
+</RelativeLayout>
+    
