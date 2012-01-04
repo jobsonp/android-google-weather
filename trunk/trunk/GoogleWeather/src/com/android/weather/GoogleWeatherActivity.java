@@ -1,60 +1,40 @@
 package com.android.weather;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import android.app.ListActivity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.weather.adapter.WeatherInfoItemAdapter;
 import com.android.weather.model.CurrentWeatherInfo;
 import com.android.weather.model.WeatherInfo;
 import com.android.weather.utils.AppConstants;
 import com.android.weather.utils.GoogleWeatherHandler;
-import com.android.weather.utils.HttpDownloader;
 import com.android.weather.utils.WeatherIconResourceMap;
-
-import android.app.Activity;
-import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
-import android.os.storage.OnObbStateChangeListener;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class GoogleWeatherActivity extends ListActivity {
 	/** Called when the activity is first created. */
@@ -89,8 +69,7 @@ public class GoogleWeatherActivity extends ListActivity {
 	}
 
 	class MyItemSelectedListener implements OnItemSelectedListener {
-
-		@Override
+		
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
 			String cont = parent.getItemAtPosition(pos).toString();
@@ -104,10 +83,9 @@ public class GoogleWeatherActivity extends ListActivity {
 			xmlTask.execute(cont);
 		}
 
-		@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
-
+			
 		}
 
 	}
