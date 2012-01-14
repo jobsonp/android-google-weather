@@ -20,6 +20,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -137,6 +139,22 @@ public class GoogleWeatherActivity extends ListActivity {
 	}
 	
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		menu.add(0, 1, 0, "添加城市");
+		menu.add(0, 2, 0, "关于");
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// TODO Auto-generated method stub
+		if(featureId==1){
+			
+		}
+		return super.onMenuItemSelected(featureId, item);
+	}
 	
 	// 将天气信息展示到前台listView
 	public void showInListView(List<WeatherInfo> weatherInfos) {

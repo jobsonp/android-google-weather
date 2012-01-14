@@ -38,6 +38,9 @@ public class WeatherIconResourceMap {
 		drawableIdHash.put("sunny", R.drawable.sunny);
 		drawableIdHash.put("thunderstorm", R.drawable.thunderstorm);
 		drawableIdHash.put("cn_fog", R.drawable.cn_fog);
+		drawableIdHash.put("cn_heavyrain", R.drawable.cn_heavyrain);
+		drawableIdHash.put("cn_lightrain", R.drawable.cn_lightrain);
+		drawableIdHash.put("cn_cloudy", R.drawable.cn_cloudy);
 		
 		
 	}
