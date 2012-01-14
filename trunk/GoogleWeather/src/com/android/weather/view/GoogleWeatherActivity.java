@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.android.weather.R;
 import com.android.weather.adapter.WeatherInfoItemAdapter;
+import com.android.weather.db.DatabaseManager;
 import com.android.weather.model.CurrentWeatherInfo;
 import com.android.weather.model.WeatherInfo;
 import com.android.weather.utils.AppConstants;
@@ -47,6 +48,7 @@ public class GoogleWeatherActivity extends ListActivity {
 	private ListView listView;
 	private WeatherInfoItemAdapter adapter;
 	private TextView tView;
+	private DatabaseManager dbManager;
 	
 	//初始化天气图像的资源对象
 	private WeatherIconResourceMap weaObj;
@@ -57,6 +59,10 @@ public class GoogleWeatherActivity extends ListActivity {
 		setContentView(R.layout.main);
 		listView = getListView();
 		tView = (TextView)findViewById(R.id.address);
+		dbManager = new DatabaseManager(getApplicationContext());
+		
+//		dbManager.openOrCreateDatabase("test.db");
+//		dbManager.execSQL("test.db","create table tt(_id integer primary key autoincrement,name,address)");
 		//初始化天气图像的资源，生成hashMap
 		weaObj = new WeatherIconResourceMap(resMap);
 		

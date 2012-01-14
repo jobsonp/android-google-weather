@@ -31,11 +31,11 @@ import android.widget.SimpleCursorAdapter;
 
 public class NeedShowWethInfoCityListActivity extends Activity {
 	
-	private DatabaseHelper helper = null;
+//	private DatabaseHelper helper = null;
 	private ListView listView;
 	public static NeedShowWethInfoCityListActivity dcity;
 	public static SQLiteDatabase db=null;
-	private Button addCity = null;
+	private Button addCity ,finishCity;
 	private DatabaseManager dbManager;
 	
 	@Override
@@ -47,35 +47,49 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 		setContentView(R.layout.need_show_wethinfo_city_listview);
 		//导入已有的数据库
 		dbManager = new DatabaseManager(getApplicationContext());
-		dbManager.openDatabase();
+		db = dbManager.importDatabase();
+		dbManager.closeDB(db);
+		
 		
 		dcity = this;
-		helper = new DatabaseHelper(NeedShowWethInfoCityListActivity.this, "storecity.db");
+//		helper = new DatabaseHelper(NeedShowWethInfoCityListActivity.this, "storecity.db");
 		
 		addCity = (Button)findViewById(R.id.addcity);
+		finishCity = (Button)findViewById(R.id.finishcity);
+		
 		listView = (ListView)findViewById(R.id.storecitylist);
 		
 		showCityList();
 		addCity.setOnClickListener(new AddCityButtonClickListener());
+		finishCity.setOnClickListener(new FinishCityButtonClickListener());
 	}
 	
 	class AddCityButtonClickListener implements OnClickListener{
-
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			Intent intent = new Intent();
 			intent.setClass(getApplicationContext(), BackgroundCitySearchActivity.class);
 			startActivity(intent);
 		}
 		
 	}
+	class FinishCityButtonClickListener implements OnClickListener{
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), GoogleWeatherActivity.class);
+			startActivity(intent);
+		}
+	}
 	
 	
 	public void showCityList(){
-		db =helper.getWritableDatabase();
+//		db =dbManager.openOrCreateDatabase("storecity.db");
+		if(!dbManager.isTableExists("storecity.db", "storecity")){
+			dbManager.execSQL("storecity.db", "create table storecity(_id integer primary key autoincrement,city varchar(20))");
+		}
 		//获取城市列表，显示到listview中
-		Cursor cursor = db.query("storecity", new String[]{"_id","city"}, null, null, null, null, null);
+		Cursor cursor = dbManager.openQuery("storecity.db", "select _id,city from storecity");
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
 		while(cursor.moveToNext()){
 			HashMap<String, Object> hash = new HashMap<String, Object>();
@@ -93,7 +107,7 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 //				new String[]{"city"}, new int[]{R.id.storeListview});
 		
 		listView.setAdapter(listadapter);
-		
+//		dbManager.closeDB(db);
 //		listView.setOnItemClickListener(listener)
 	}
 	
@@ -101,13 +115,12 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		dbManager.close();
-		if(db!=null){
-			db.close();
-		}
-		if(helper!=null){
-			helper.close();
-		}
+//		if(db!=null){
+//			db.close();
+//		}
+//		if(helper!=null){
+//			helper.close();
+
 	}
 	
 		

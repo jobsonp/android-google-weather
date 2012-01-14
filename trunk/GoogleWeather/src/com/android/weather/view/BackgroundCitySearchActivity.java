@@ -52,18 +52,19 @@ public class BackgroundCitySearchActivity extends Activity {
 	private EditText etext;
 	private ImageButton imageBtn;
 	private Button gpsBtn,localCitySearch;
-	private DatabaseHelper helper,helper1 ;
+//	private DatabaseHelper helper,helper12 ;
 	private GridView gridView;
 	private ListView listView;
 	private String queryString ;
-	private SQLiteDatabase db;
+//	private SQLiteDatabase storecitydb,citydb;
+	private DatabaseManager dbManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.background_city_search);
         
-//        helper = new DatabaseHelper(TestSqlliteActivity.this, "city.db3"); 
-        helper1 = new DatabaseHelper(BackgroundCitySearchActivity.this, "storecity.db");
+        dbManager = new DatabaseManager(getApplicationContext());
+//        storecitydb = dbManager.openOrCreateDatabase("storecity.db");
         
         EditCancel ec = (EditCancel)findViewById(R.id.customedit);
         gpsBtn = (Button)findViewById(R.id.gpsSearch);
@@ -71,9 +72,6 @@ public class BackgroundCitySearchActivity extends Activity {
         
         gridView = (GridView)findViewById(R.id.gridview);
         listView = (ListView)findViewById(R.id.listview);
-        
-       
-        
         
         //搜索框中的控件对象
         etext = ec.geteText();
@@ -102,10 +100,9 @@ public class BackgroundCitySearchActivity extends Activity {
 			public void onClick(View v) {
 				String s = etext.getText().toString();
 				if(s.length()!=0){
-//	 				SQLiteDatabase db = helper.getReadableDatabase();
-	 				db = SQLiteDatabase.openOrCreateDatabase(DatabaseManager.DB_PATH+File.separator+DatabaseManager.DB_NAME, null);
 	 				
-	 				Cursor cursor = db.query("city", new String[]{"_id","city","province"}, "city like '"+s+"%' or pinyin like '"+s+"%'", null, null, null, null);
+	 				Cursor cursor = dbManager.openQuery("city.db3", "city", "(city like '"+s+"%' or pinyin like '"+s+"%')");
+//	 						citydb.query("city", new String[]{"_id","city","province"}, "city like '"+s+"%' or pinyin like '"+s+"%'", null, null, null, null);
 	 				
 	 				SimpleCursorAdapter adapter = new SimpleCursorAdapter(BackgroundCitySearchActivity.this, R.layout.database_sel_grid_list_item,
 	 						cursor, new String[]{"city","province"}, new int[]{R.id.cityname,R.id.provincename});
@@ -113,14 +110,6 @@ public class BackgroundCitySearchActivity extends Activity {
 	 				gridView.setVisibility(View.VISIBLE);
 	 				listView.setVisibility(View.GONE);
 	 				gridView.setAdapter(adapter);
-//	 				while(cursor.moveToNext()){
-//	 					String name = cursor.getString(cursor.getColumnIndex("city"));
-//	 					String proname = cursor.getString(cursor.getColumnIndex("province"));
-//	 					System.out.println("name is "+ name+"  province is:"+proname);
-//	 				}
-	 				if(db!=null){
-	 		    		db.close();
-	 		    	}
 	 			}else{
 	 				Toast.makeText(getApplicationContext(), "请输入查询内容！", Toast.LENGTH_SHORT).show();
 	 			}
@@ -136,12 +125,6 @@ public class BackgroundCitySearchActivity extends Activity {
     protected void onDestroy() {
     	// TODO Auto-generated method stub
     	super.onDestroy();
-    	if(db!=null){
-    		db.close();
-    	}
-    	if(helper1!=null){
-    		helper1.close();
-    	}
     }
     
   //listview 点击事件
@@ -156,10 +139,11 @@ public class BackgroundCitySearchActivity extends Activity {
 			ContentValues values = new ContentValues();
 			values.put("city", content[1]);
 			
-			SQLiteDatabase db = helper1.getWritableDatabase();
-			Cursor cursor = db.rawQuery("select _id from storecity where city=?", new String[]{content[1]});
+//			SQLiteDatabase db = helper1.getWritableDatabase();
+			Cursor cursor = dbManager.openQuery("storecity.db", "select _id from storecity where city='"+content[1]+"'");
+//					storecitydb.rawQuery("select _id from storecity where city=?", new String[]{content[1]});
 			if(cursor.getCount()==0){
-				long i = db.insert("storecity", null, values);
+				long i = dbManager.insert("storecity.db", "storecity", values);
 				if(i!=-1){
 					Intent intent = new Intent();
 					intent.setClass(getApplicationContext(), NeedShowWethInfoCityListActivity.class);
@@ -182,10 +166,10 @@ public class BackgroundCitySearchActivity extends Activity {
 			ContentValues values = new ContentValues();
 			values.put("city", s);
 			
-			SQLiteDatabase db = helper1.getWritableDatabase();
-			Cursor cursor = db.rawQuery("select _id from storecity where city=?", new String[]{s});
+//			SQLiteDatabase db = helper1.getWritableDatabase();
+			Cursor cursor = dbManager.openQuery("storecity.db", "select _id from storecity where city='"+s+"'");
 			if(cursor.getCount()==0){
-				long i = db.insert("storecity", null, values);
+				long i = dbManager.insert("storecity.db", "storecity", values);
 				if(i!=-1){
 					Intent intent = new Intent();
 					intent.setClass(getApplicationContext(), NeedShowWethInfoCityListActivity.class);
@@ -265,7 +249,6 @@ public class BackgroundCitySearchActivity extends Activity {
     
  // 当输入框状态改变时，会调用相应的方法
  	TextWatcher tw = new TextWatcher() {
- 		
  		@Override
  		public void onTextChanged(CharSequence s, int start, int before, int count) {
  		}
