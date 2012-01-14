@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		System.out.println("创建一个数据库");
-		db.execSQL("create table storecity(_id integer primary key autoincrement,city varchar(20))");
+		db.execSQL("create table storecity(_id integer primary key autoincrement,city varchar(20));");
 	}
 
 	@Override
