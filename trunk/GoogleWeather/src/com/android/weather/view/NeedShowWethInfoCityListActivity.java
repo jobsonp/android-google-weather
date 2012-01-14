@@ -31,7 +31,6 @@ import android.widget.SimpleCursorAdapter;
 
 public class NeedShowWethInfoCityListActivity extends Activity {
 	
-//	private DatabaseHelper helper = null;
 	private ListView listView;
 	public static NeedShowWethInfoCityListActivity dcity;
 	public static SQLiteDatabase db=null;
@@ -40,7 +39,6 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		//对广告信息初始化
 		AdManager.init(getApplicationContext(), "120511ceb41405ad", "7f2e4c0300e37e06", 30, true);
@@ -50,9 +48,7 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 		db = dbManager.importDatabase();
 		dbManager.closeDB(db);
 		
-		
 		dcity = this;
-//		helper = new DatabaseHelper(NeedShowWethInfoCityListActivity.this, "storecity.db");
 		
 		addCity = (Button)findViewById(R.id.addcity);
 		finishCity = (Button)findViewById(R.id.finishcity);
@@ -84,7 +80,6 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 	
 	
 	public void showCityList(){
-//		db =dbManager.openOrCreateDatabase("storecity.db");
 		if(!dbManager.isTableExists("storecity.db", "storecity")){
 			dbManager.execSQL("storecity.db", "create table storecity(_id integer primary key autoincrement,city varchar(20))");
 		}
@@ -103,23 +98,13 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 		CityListItemSimpleAdapter listadapter = new CityListItemSimpleAdapter(NeedShowWethInfoCityListActivity.this, list, R.layout.need_show_wethinfo_city_listview_item,
 				new String[]{"cityname","btn1","delbtn"}, new int[]{R.id.storeListview,R.id.button1,R.id.delbutton,R.id.imageview1});
 		
-//		SimpleCursorAdapter listadapter = new SimpleCursorAdapter(DBCityList.this, R.layout.storcity_listview_item, cursor,
-//				new String[]{"city"}, new int[]{R.id.storeListview});
-		
 		listView.setAdapter(listadapter);
-//		dbManager.closeDB(db);
-//		listView.setOnItemClickListener(listener)
 	}
 	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-//		if(db!=null){
-//			db.close();
-//		}
-//		if(helper!=null){
-//			helper.close();
 
 	}
 	
