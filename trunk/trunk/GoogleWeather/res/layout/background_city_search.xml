@@ -44,7 +44,7 @@
 			   		android:layout_height="wrap_content"
 			   		/>
 
-	    	    <com.android.sqllite1.EditCancel
+	    	    <com.android.weather.custom.widget.EditCancel
 	    	        android:id="@+id/customedit"
 	    	        android:layout_width="220dp"
 	    	        android:layout_height="wrap_content"
