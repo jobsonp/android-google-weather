@@ -59,7 +59,8 @@
         android:layout_height="342dp"
         android:background="@drawable/city_search_seach_frame"
         android:divider="#6599FF"
-        android:padding="10dip" >
+        android:padding="10dip"
+        android:cacheColorHint="#00000000" >
 
 </ListView>
   <net.youmi.android.AdView
