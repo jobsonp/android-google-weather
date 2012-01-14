@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+	<LinearLayout 
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/title"
+	    android:gravity="center"
+	    >
+	    <TextView  
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:text="@string/note"
+		    android:textSize="15dip"
+		    
+		    android:shadowColor="#FF000000"
+			android:shadowDx="-1.0"
+			android:shadowDy="-2.0"
+			android:shadowRadius="1.0"
+	    />
+	    
+    </LinearLayout>
+<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" 
+	    >
+
+	    	<LinearLayout
+	    	    android:layout_width="fill_parent"
+	    	    android:layout_height="wrap_content"
+	    	    android:layout_marginLeft="10.0dip"
+	    	    android:layout_marginRight="10.0dip"
+	    	    android:orientation="horizontal" >
+			
+			<Button android:id="@+id/gpsSearch"
+			   		android:background="@drawable/city_gps_click_selector"
+			   		android:layout_width="wrap_content"
+			   		android:layout_height="wrap_content"
+			   		/>
+
+	    	    <com.android.sqllite1.EditCancel
+	    	        android:id="@+id/customedit"
+	    	        android:layout_width="220dp"
+	    	        android:layout_height="wrap_content"
+	    	        android:paddingLeft="5dip"
+	    	        android:paddingRight="10dip"
+	    	        android:paddingTop="5dip" />
+
+	    	    <Button
+	    	        android:id="@+id/localSearch"
+	    	        android:layout_width="match_parent"
+	    	        android:layout_height="wrap_content"
+	    	        android:background="@drawable/city_local_searck_click_selector"
+	    	        android:text="@string/localSearchString"
+	    	        android:textColor="#ffffff"
+	    	        />
+
+	    	</LinearLayout>
+
+    </LinearLayout>
+    	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" 
+	    >
+	    	<TextView 
+	    	    android:id="@+id/hintView"
+	    	    android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:visibility="gone"
+	    	    />
+			    
+		    <GridView
+		        android:id="@+id/gridview"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:columnWidth="90dp"
+		        android:horizontalSpacing="10dp"
+		        android:verticalSpacing="10dp" 
+		        android:numColumns="auto_fit"
+		        android:stretchMode="columnWidth">
+		    </GridView>
+		    
+		      <ListView
+		        android:id="@+id/listview"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content" 
+		        android:visibility="gone"
+		        >
+    </ListView>
+    </LinearLayout>
+    
+    	    
+</LinearLayout>

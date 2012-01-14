@@ -3,5 +3,9 @@
 
     <string name="hello">Hello World, GoogleWeatherActivity!</string>
     <string name="app_name">GoogleWeather</string>
-
+	<string name="note">请输入地区名称或邮编</string>
+    <string name="localSearchString">查询</string>
+    <string name="cityManager">地区管理</string>
+    <string name="addcity">添加 </string>
+    <string name="finishcity">完成</string>
 </resources>
