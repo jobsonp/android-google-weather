@@ -1,4 +1,4 @@
-package com.android.weather;
+package com.android.weather.view;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +18,7 @@ import org.xml.sax.XMLReader;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.weather.R;
 import com.android.weather.adapter.WeatherInfoItemAdapter;
 import com.android.weather.model.CurrentWeatherInfo;
 import com.android.weather.model.WeatherInfo;
@@ -150,8 +152,11 @@ public class GoogleWeatherActivity extends ListActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		// TODO Auto-generated method stub
-		if(featureId==1){
-			
+		
+		if(item.getItemId()==1){
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), NeedShowWethInfoCityListActivity.class);
+			startActivity(intent);
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}

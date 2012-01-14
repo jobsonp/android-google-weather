@@ -1,5 +1,9 @@
 package com.android.weather.model;
-
+/**
+ * 用于解析从google weather 获取的天气信息--xml数据
+ * @author Administrator
+ *
+ */
 public class WeatherInfo {
 
 	
