@@ -52,11 +52,9 @@ public class BackgroundCitySearchActivity extends Activity {
 	private EditText etext;
 	private ImageButton imageBtn;
 	private Button gpsBtn,localCitySearch;
-//	private DatabaseHelper helper,helper12 ;
 	private GridView gridView;
 	private ListView listView;
 	private String queryString ;
-//	private SQLiteDatabase storecitydb,citydb;
 	private DatabaseManager dbManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +62,6 @@ public class BackgroundCitySearchActivity extends Activity {
         setContentView(R.layout.background_city_search);
         
         dbManager = new DatabaseManager(getApplicationContext());
-//        storecitydb = dbManager.openOrCreateDatabase("storecity.db");
         
         EditCancel ec = (EditCancel)findViewById(R.id.customedit);
         gpsBtn = (Button)findViewById(R.id.gpsSearch);
@@ -102,8 +99,6 @@ public class BackgroundCitySearchActivity extends Activity {
 				if(s.length()!=0){
 	 				
 	 				Cursor cursor = dbManager.openQuery("city.db3", "city", "(city like '"+s+"%' or pinyin like '"+s+"%')");
-//	 						citydb.query("city", new String[]{"_id","city","province"}, "city like '"+s+"%' or pinyin like '"+s+"%'", null, null, null, null);
-	 				
 	 				SimpleCursorAdapter adapter = new SimpleCursorAdapter(BackgroundCitySearchActivity.this, R.layout.database_sel_grid_list_item,
 	 						cursor, new String[]{"city","province"}, new int[]{R.id.cityname,R.id.provincename});
 	 				
@@ -123,7 +118,6 @@ public class BackgroundCitySearchActivity extends Activity {
     
     @Override
     protected void onDestroy() {
-    	// TODO Auto-generated method stub
     	super.onDestroy();
     }
     
@@ -139,9 +133,7 @@ public class BackgroundCitySearchActivity extends Activity {
 			ContentValues values = new ContentValues();
 			values.put("city", content[1]);
 			
-//			SQLiteDatabase db = helper1.getWritableDatabase();
 			Cursor cursor = dbManager.openQuery("storecity.db", "select _id from storecity where city='"+content[1]+"'");
-//					storecitydb.rawQuery("select _id from storecity where city=?", new String[]{content[1]});
 			if(cursor.getCount()==0){
 				long i = dbManager.insert("storecity.db", "storecity", values);
 				if(i!=-1){
@@ -166,7 +158,6 @@ public class BackgroundCitySearchActivity extends Activity {
 			ContentValues values = new ContentValues();
 			values.put("city", s);
 			
-//			SQLiteDatabase db = helper1.getWritableDatabase();
 			Cursor cursor = dbManager.openQuery("storecity.db", "select _id from storecity where city='"+s+"'");
 			if(cursor.getCount()==0){
 				long i = dbManager.insert("storecity.db", "storecity", values);
@@ -210,13 +201,10 @@ public class BackgroundCitySearchActivity extends Activity {
 				}
 				System.out.println(addr);
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -225,7 +213,6 @@ public class BackgroundCitySearchActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
 			String str = "";
 			Gson gson = new Gson();
 			Result r = gson.fromJson(result, Result.class);

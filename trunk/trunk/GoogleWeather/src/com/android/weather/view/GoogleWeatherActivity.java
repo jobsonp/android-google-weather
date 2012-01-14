@@ -61,8 +61,6 @@ public class GoogleWeatherActivity extends ListActivity {
 		tView = (TextView)findViewById(R.id.address);
 		dbManager = new DatabaseManager(getApplicationContext());
 		
-//		dbManager.openOrCreateDatabase("test.db");
-//		dbManager.execSQL("test.db","create table tt(_id integer primary key autoincrement,name,address)");
 		//初始化天气图像的资源，生成hashMap
 		weaObj = new WeatherIconResourceMap(resMap);
 		
@@ -85,14 +83,12 @@ public class GoogleWeatherActivity extends ListActivity {
 			String cont = parent.getItemAtPosition(pos).toString();
 			Toast.makeText(parent.getContext(),cont,Toast.LENGTH_SHORT).show();
 			tView.setText("目前显示地址: "+cont);
-			
 			//
 			clearListView();
 			
 			CompileXMLTask xmlTask = new CompileXMLTask(parent.getContext());
 			xmlTask.execute(cont);
 		}
-
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 			
@@ -104,7 +100,6 @@ public class GoogleWeatherActivity extends ListActivity {
 		ProgressDialog proDialog = null;
 		
 		public CompileXMLTask(Context context){
-//			proDialog = new ProgressDialog(context, ProgressDialog.STYLE_SPINNER);
 			proDialog = ProgressDialog.show(context, "稍等", "更新数据中...");
 		}
 		
@@ -127,14 +122,9 @@ public class GoogleWeatherActivity extends ListActivity {
 				//解析xml文件
 				reader.parse(new InputSource(input));
 				
-				
-				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	
-	    	
 			return "j";
 		}
 
@@ -145,11 +135,8 @@ public class GoogleWeatherActivity extends ListActivity {
 		}
 
 	}
-	
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		menu.add(0, 1, 0, "添加城市");
 		menu.add(0, 2, 0, "关于");
 		return super.onCreateOptionsMenu(menu);
@@ -157,8 +144,6 @@ public class GoogleWeatherActivity extends ListActivity {
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		// TODO Auto-generated method stub
-		
 		if(item.getItemId()==1){
 			Intent intent = new Intent();
 			intent.setClass(getApplicationContext(), NeedShowWethInfoCityListActivity.class);
@@ -173,8 +158,6 @@ public class GoogleWeatherActivity extends ListActivity {
 
 		for (Iterator iterator = weatherInfos.iterator(); iterator.hasNext();) {
 			WeatherInfo weatherInfo = (WeatherInfo) iterator.next();
-			
-			
 			HashMap<String, String> hash = new HashMap<String, String>();
 			
 			hash.put("weaDate", weatherInfo.getDayOfWeek());
@@ -182,7 +165,6 @@ public class GoogleWeatherActivity extends ListActivity {
 			hash.put("icon", weatherInfo.getIconName());
 			hash.put("condition", weatherInfo.getCondition());
 			list.add(hash);
-
 		}
 
 		adapter = new WeatherInfoItemAdapter(GoogleWeatherActivity.this,
