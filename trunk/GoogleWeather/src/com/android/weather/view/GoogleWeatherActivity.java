@@ -15,10 +15,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,12 +70,18 @@ public class GoogleWeatherActivity extends ListActivity {
 		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner);
 		// 城市数据
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				GoogleWeatherActivity.this,
-				android.R.layout.simple_spinner_item, AppConstants.city);
+		List<String> cityListData = getCityData();
+		if(cityListData.size()!=0){
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+					GoogleWeatherActivity.this,
+					android.R.layout.simple_spinner_item, cityListData);
+//		adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+			adapter.setDropDownViewResource(R.layout.myspinner_dropdown);
+			spinner.setAdapter(adapter);
+		}else{
+			showAlertDialog("请添加城市！");
+		}
 
-		adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-		spinner.setAdapter(adapter);
 		// 触发事件
 		spinner.setOnItemSelectedListener(new MyItemSelectedListener());
 	}
@@ -184,6 +194,43 @@ public class GoogleWeatherActivity extends ListActivity {
 			weatherInfos.clear();
 			adapter.notifyDataSetChanged();
 		}
+	}
+	/**
+	 * 读取数据库中存的要查询天气的城市数据
+	 * @return
+	 */
+	private List<String> getCityData(){
+		List<String> list = new ArrayList<String>();
+		
+		if(!dbManager.isTableExists("storecity.db", "storecity")){
+			dbManager.execSQL("storecity.db", "create table storecity(_id integer primary key autoincrement,city varchar(20))");
+		}
+		Cursor cursor = dbManager.openQuery("storecity.db", "select _id,city from storecity");
+		while (cursor.moveToNext()) {
+			String cityName = cursor.getString(cursor.getColumnIndex("city"));
+			list.add(cityName);
+		}
+		return list;
+		
+	}
+	
+	private void showAlertDialog(String msg){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this)
+		.setTitle("提示信息")
+		.setIcon(R.drawable.ic_podcast)
+		.setMessage(msg)
+		.setPositiveButton("添加", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent();
+				intent.setClass(GoogleWeatherActivity.this, BackgroundCitySearchActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 	
 }

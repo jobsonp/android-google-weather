@@ -35,7 +35,7 @@ public class NeedShowWethInfoCityListActivity extends Activity {
 	public static NeedShowWethInfoCityListActivity dcity;
 	public static SQLiteDatabase db=null;
 	private Button addCity ,finishCity;
-	private DatabaseManager dbManager;
+	public DatabaseManager dbManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

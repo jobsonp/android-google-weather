@@ -157,7 +157,13 @@ public class DatabaseManager{
     public boolean isDatabaseExists(String dbName){
         return new File(dbName).exists();
     }
-    
+    /**
+     * 插入数据
+     * @param dbName
+     * @param tableName
+     * @param values
+     * @return
+     */
     public long insert(String dbName,String tableName,ContentValues values){
     	SQLiteDatabase db = openOrCreateDatabase(dbName);
     	long l = db.insert(tableName, null, values);
@@ -165,4 +171,20 @@ public class DatabaseManager{
 		return l;
     	
     }
+    /**
+     * 删除数据
+     * @param dbName
+     * @param tableName
+     * @param whereClause     条件子句--- 格式：_id=?
+     * @param whereArgs    where子句  参数        
+     * @return
+     */
+    public long delete(String dbName,String tableName,String whereClause,String whereArgs ){
+    	SQLiteDatabase db = openOrCreateDatabase(dbName);
+    	long l = db.delete(tableName, whereClause, new String[]{whereArgs});
+    	closeDB(db);
+    	return l;
+    }
+    
+    
 }

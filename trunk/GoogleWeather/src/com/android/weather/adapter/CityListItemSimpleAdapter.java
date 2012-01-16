@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.weather.R;
+import com.android.weather.db.DatabaseManager;
 import com.android.weather.view.NeedShowWethInfoCityListActivity;
 
 
@@ -46,6 +47,7 @@ public class CityListItemSimpleAdapter extends BaseAdapter {
 	private String flag[];
 	private int ItemIDs[];
 	private Context context = null;
+	private DatabaseManager dbManager;
 	
 	public CityListItemSimpleAdapter(Context context, List<HashMap<String, Object>> list,
 			int layoutID, String flag[], int ItemIDs[]) {
@@ -55,6 +57,7 @@ public class CityListItemSimpleAdapter extends BaseAdapter {
 		this.flag = flag;
 		this.ItemIDs = ItemIDs;
 		this.context = context;
+		this.dbManager = new DatabaseManager(context);
 	}
 	@Override
 	public int getCount() {
@@ -161,7 +164,7 @@ public class CityListItemSimpleAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				int i = NeedShowWethInfoCityListActivity.db.delete("storecity", "city=?", new String[]{tview.getText().toString()});
+				long i = dbManager.delete("storecity.db", "storecity", "city=?", tview.getText().toString());
 				if(i!=-1){
 					
 					Intent intent = new Intent();
