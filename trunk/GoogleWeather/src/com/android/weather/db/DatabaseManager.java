@@ -9,12 +9,15 @@ import java.io.InputStream;
 import com.android.weather.R;
 
 
+
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
+
 /**
  * 
  * @author tps
@@ -24,7 +27,7 @@ public class DatabaseManager{
     private final int BUFFER_SIZE = 4*1024;
     public static final String SQLite_MASTER_TABLE = "sqlite_master";
     public static final String DB_NAME = "city.db3"; //保存已有的数据库文件名
-    public static final String PACKAGE_NAME = "com.android.weather";//包名
+    public static final String PACKAGE_NAME = "davidtps.demo.usermanager";//包名
     public static final String DB_PATH = "/data"
                + Environment.getDataDirectory().getAbsolutePath() + File.separator + PACKAGE_NAME+File.separator+"databases";  //在手机里存放数据库的位置
 
@@ -65,7 +68,7 @@ public class DatabaseManager{
     } 
     
     
-    /**
+   /**
      * 将已有的数据库导入到指定位置 --拷贝数据库
      */
     public SQLiteDatabase importDatabase() {
@@ -176,12 +179,27 @@ public class DatabaseManager{
      * @param dbName
      * @param tableName
      * @param whereClause     条件子句--- 格式：_id=?
-     * @param whereArgs    where子句  参数        
+     * @param whereArgs    where子句  参数     可以是多个参数以逗号分割   
      * @return
      */
     public long delete(String dbName,String tableName,String whereClause,String whereArgs ){
     	SQLiteDatabase db = openOrCreateDatabase(dbName);
     	long l = db.delete(tableName, whereClause, new String[]{whereArgs});
+    	closeDB(db);
+    	return l;
+    }
+    /**
+     * 更新数据
+     * @param dbName
+     * @param tableName
+     * @param values    传入需要修改的键值对
+     * @param whereClause   条件子句--- 格式：_id=?
+     * @param whereArgs    where子句  参数     可以是多个参数以逗号分割 
+     * @return
+     */
+    public long update(String dbName,String tableName,ContentValues values,String whereClause,String whereArgs){
+    	SQLiteDatabase db = openOrCreateDatabase(dbName);
+    	long l = db.update(tableName, values, whereClause, new String[]{whereArgs});
     	closeDB(db);
     	return l;
     }
